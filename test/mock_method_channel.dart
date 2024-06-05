@@ -5,7 +5,7 @@ class MockMethodChannel {
   final List<MethodChannel> eventsChannels = [];
 
   MockMethodChannel() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+    channel.setMethodCallHandler((MethodCall methodCall) async {
       if (methodCall.method == "create") {
         final int id = getNextId();
         _createEventChannel(id);
@@ -36,7 +36,7 @@ class MockMethodChannel {
     final MethodChannel eventChannel =
         MethodChannel("better_player_channel/videoEvents$id");
 
-    eventChannel.setMockMethodCallHandler((MethodCall methodCall) async {
+    eventChannel.setMethodCallHandler((MethodCall methodCall) async {
       ServicesBinding.instance!.defaultBinaryMessenger.handlePlatformMessage(
           "better_player_channel/videoEvents$id",
           const StandardMethodCodec().encodeSuccessEnvelope(_getInitResult()),
