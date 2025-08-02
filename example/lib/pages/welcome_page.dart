@@ -1,33 +1,34 @@
 import 'dart:io';
 
-import 'package:better_player_example/constants.dart';
-import 'package:better_player_example/pages/auto_fullscreen_orientation_page.dart';
-import 'package:better_player_example/pages/basic_player_page.dart';
-import 'package:better_player_example/pages/cache_page.dart';
-import 'package:better_player_example/pages/controller_controls_page.dart';
-import 'package:better_player_example/pages/controls_always_visible_page.dart';
-import 'package:better_player_example/pages/controls_configuration_page.dart';
-import 'package:better_player_example/pages/custom_controls/change_player_theme_page.dart';
-import 'package:better_player_example/pages/dash_page.dart';
-import 'package:better_player_example/pages/drm_page.dart';
-import 'package:better_player_example/pages/event_listener_page.dart';
-import 'package:better_player_example/pages/fade_placeholder_page.dart';
-import 'package:better_player_example/pages/hls_audio_page.dart';
-import 'package:better_player_example/pages/hls_subtitles_page.dart';
-import 'package:better_player_example/pages/hls_tracks_page.dart';
-import 'package:better_player_example/pages/memory_player_page.dart';
-import 'package:better_player_example/pages/normal_player_page.dart';
-import 'package:better_player_example/pages/notification_player_page.dart';
-import 'package:better_player_example/pages/overridden_aspect_ratio_page.dart';
-import 'package:better_player_example/pages/overriden_duration_page.dart';
-import 'package:better_player_example/pages/placeholder_until_play_page.dart';
-import 'package:better_player_example/pages/playlist_page.dart';
-import 'package:better_player_example/pages/resolutions_page.dart';
-import 'package:better_player_example/pages/reusable_video_list/reusable_video_list_page.dart';
-import 'package:better_player_example/pages/rotation_and_fit_page.dart';
-import 'package:better_player_example/pages/subtitles_page.dart';
-import 'package:better_player_example/pages/video_list/video_list_page.dart';
-import 'package:better_player_example/pages/picture_in_picture_page.dart';
+import 'package:example/constants.dart';
+import 'package:example/pages/auto_fullscreen_orientation_page.dart';
+import 'package:example/pages/basic_player_page.dart';
+import 'package:example/pages/cache_page.dart';
+import 'package:example/pages/clearkey_page.dart';
+import 'package:example/pages/controller_controls_page.dart';
+import 'package:example/pages/controls_always_visible_page.dart';
+import 'package:example/pages/controls_configuration_page.dart';
+import 'package:example/pages/custom_controls/change_player_theme_page.dart';
+import 'package:example/pages/dash_page.dart';
+import 'package:example/pages/drm_page.dart';
+import 'package:example/pages/event_listener_page.dart';
+import 'package:example/pages/fade_placeholder_page.dart';
+import 'package:example/pages/hls_audio_page.dart';
+import 'package:example/pages/hls_subtitles_page.dart';
+import 'package:example/pages/hls_tracks_page.dart';
+import 'package:example/pages/memory_player_page.dart';
+import 'package:example/pages/normal_player_page.dart';
+import 'package:example/pages/notification_player_page.dart';
+import 'package:example/pages/overridden_aspect_ratio_page.dart';
+import 'package:example/pages/overriden_duration_page.dart';
+import 'package:example/pages/placeholder_until_play_page.dart';
+import 'package:example/pages/playlist_page.dart';
+import 'package:example/pages/resolutions_page.dart';
+import 'package:example/pages/reusable_video_list/reusable_video_list_page.dart';
+import 'package:example/pages/rotation_and_fit_page.dart';
+import 'package:example/pages/subtitles_page.dart';
+import 'package:example/pages/video_list/video_list_page.dart';
+import 'package:example/pages/picture_in_picture_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -42,6 +43,7 @@ class _WelcomePageState extends State<WelcomePage> {
   void initState() {
     _saveAssetSubtitleToFile();
     _saveAssetVideoToFile();
+    _saveAssetEncryptVideoToFile();
     _saveLogoToFile();
     super.initState();
   }
@@ -127,9 +129,6 @@ class _WelcomePageState extends State<WelcomePage> {
       _buildExampleElementWidget("Overridden aspect ratio", () {
         _navigateToPage(OverriddenAspectRatioPage());
       }),
-      _buildExampleElementWidget("Overridden aspect ratio", () {
-        _navigateToPage(OverriddenAspectRatioPage());
-      }),
       _buildExampleElementWidget("Notifications player", () {
         _navigateToPage(NotificationPlayerPage());
       }),
@@ -156,6 +155,9 @@ class _WelcomePageState extends State<WelcomePage> {
       }),
       _buildExampleElementWidget("DRM", () {
         _navigateToPage(DrmPage());
+      }),
+      _buildExampleElementWidget("ClearKey DRM", () {
+        _navigateToPage(ClearKeyPage());
       }),
       _buildExampleElementWidget("DASH", () {
         _navigateToPage(DashPage());
@@ -205,6 +207,14 @@ class _WelcomePageState extends State<WelcomePage> {
     var content = await rootBundle.load("assets/testvideo.mp4");
     final directory = await getApplicationDocumentsDirectory();
     var file = File("${directory.path}/testvideo.mp4");
+    file.writeAsBytesSync(content.buffer.asUint8List());
+  }
+
+  Future _saveAssetEncryptVideoToFile() async {
+    var content =
+        await rootBundle.load("assets/${Constants.fileTestVideoEncryptUrl}");
+    final directory = await getApplicationDocumentsDirectory();
+    var file = File("${directory.path}/${Constants.fileTestVideoEncryptUrl}");
     file.writeAsBytesSync(content.buffer.asUint8List());
   }
 

@@ -1,5 +1,5 @@
 import 'package:better_player/better_player.dart';
-import 'package:better_player_example/model/video_list_data.dart';
+import 'package:example/model/video_list_data.dart';
 import 'package:flutter/material.dart';
 
 class VideoListWidget extends StatefulWidget {
@@ -49,14 +49,17 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                   videoListData!.videoUrl,
                   notificationConfiguration:
                       BetterPlayerNotificationConfiguration(
-                          showNotification: true,
+                          showNotification: false,
                           title: videoListData!.videoTitle,
                           author: "Test"),
+                  bufferingConfiguration: BetterPlayerBufferingConfiguration(
+                      minBufferMs: 2000,
+                      maxBufferMs: 10000,
+                      bufferForPlaybackMs: 1000,
+                      bufferForPlaybackAfterRebufferMs: 2000),
                 ),
                 configuration: BetterPlayerConfiguration(
-                  autoPlay: false,
-                  aspectRatio: 1,
-                ),
+                    autoPlay: false, aspectRatio: 1, handleLifecycle: true),
                 //key: Key(videoListData.hashCode.toString()),
                 playFraction: 0.8,
                 betterPlayerListVideoPlayerController: controller,

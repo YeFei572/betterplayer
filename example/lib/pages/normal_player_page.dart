@@ -1,6 +1,7 @@
 import 'package:better_player/better_player.dart';
-import 'package:better_player_example/constants.dart';
+import 'package:example/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NormalPlayerPage extends StatefulWidget {
   @override
@@ -18,10 +19,15 @@ class _NormalPlayerPageState extends State<NormalPlayerPage> {
       aspectRatio: 16 / 9,
       fit: BoxFit.contain,
       autoPlay: true,
+      looping: true,
+      deviceOrientationsAfterFullScreen: [
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.portraitUp
+      ],
     );
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      Constants.elephantDreamVideoUrl,
+      Constants.forBiggerBlazesUrl,
     );
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
     _betterPlayerController.setupDataSource(_betterPlayerDataSource);
@@ -37,14 +43,9 @@ class _NormalPlayerPageState extends State<NormalPlayerPage> {
       body: Column(
         children: [
           const SizedBox(height: 8),
-          BetterPlayerMultipleGestureDetector(
-            child: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: BetterPlayer(controller: _betterPlayerController),
-            ),
-            onTap: () {
-              print("Tap!");
-            },
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: BetterPlayer(controller: _betterPlayerController),
           ),
         ],
       ),

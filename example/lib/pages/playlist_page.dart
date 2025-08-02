@@ -1,6 +1,6 @@
 import 'package:better_player/better_player.dart';
-import 'package:better_player_example/constants.dart';
-import 'package:better_player_example/utils.dart';
+import 'package:example/constants.dart';
+import 'package:example/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,7 +30,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
     );
     _betterPlayerPlaylistConfiguration = BetterPlayerPlaylistConfiguration(
       loopVideos: true,
-      nextVideoDelay: Duration(seconds: 1),
+      nextVideoDelay: Duration(seconds: 3),
     );
   }
 
