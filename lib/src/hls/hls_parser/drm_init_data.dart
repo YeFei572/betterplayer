@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart'; // 如果没有用到其他 Flutter 组件，此行可以移除
 
 import 'scheme_data.dart';
 
@@ -19,5 +19,6 @@ class DrmInitData {
   }
 
   @override
-  int get hashCode => hashValues(schemeType, schemeData);
+  // 使用 Dart 内置的 Object.hash() 方法进行替换
+  int get hashCode => Object.hash(schemeType, schemeData);
 }
